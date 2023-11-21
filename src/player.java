@@ -1,26 +1,29 @@
 public class player {
-    private String icon;
+    private char icon;
     private String name;
     private int row;
     private int col;
     private static int numPlayers = 0;
-    private static int numGuests = 1;
-    public player(String icon, String name){
+    private static int numGuests = 0;
+
+    public player(char icon, String name) {
+        numPlayers++;
         this.name = name;
         this.icon = icon;
         this.row = 0;
         this.col = 0;
-        numPlayers++;
     }
-    public player(String icon){
+
+    public player(char icon) {
+        numPlayers++;
+        numGuests++;
         this.name = "Player " + numGuests;
         this.icon = icon;
         this.row = 0;
         this.col = 0;
-        numPlayers++;
-        numGuests++;
     }
-    public String getIcon(){
+
+    public char getIcon() {
         return icon;
     }
 
@@ -34,6 +37,19 @@ public class player {
 
     public int getCol() {
         return col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setCoords(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     public static int getNumPlayers() {
