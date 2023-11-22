@@ -3,20 +3,41 @@ import java.util.ArrayList;
 public class game {
     public static void main(String[] args) {
         board board = init();
-        System.out.println(board);
-        System.out.println(board.getCoordinates(8)[0]);
-        System.out.println(board.getCoordinates(8)[1]);
+        die die = new die();
+        boolean game = true;
+        while (game) {
+            System.out.println(board);
+            for (player player : board.getPlayers()) {
+                System.out.println();
+                System.out.println(player.getName() + " is rolling the die");
+                CaseCatcher.typeErrorString("\nEnter to roll the die");
+                die.rollDie();
+                System.out.println(player.getName() + " rolled a " + die.getIntValue());
+
+            }
+        }
+
     }
 
     private static board init() {
         ArrayList<player> players = new ArrayList<>();
-        int numPlayers = CaseCatcher.typeErrorInt("\nHow many players are playing the game? ", "\nThe player hsa to be an integer");
+        StringBuilder existingIcons = new StringBuilder();
+        int numPlayers = CaseCatcher.typeErrorInt("\nHow many players are playing the game? ", "\nThe player has to be an integer");
         while (numPlayers < 2) {
             numPlayers = CaseCatcher.typeErrorInt("\nYou can not have less than 2 players\nHow many players are playing the game? ", "\nThe player hsa to be an integer");
         }
         for (int i = 0; i < numPlayers; i++) {
             String name = CaseCatcher.typeErrorString("\nWhat is the name of player " + (i + 1) + "? ");
-            char icon = CaseCatcher.typeErrorChar("\nWhat is the icon of player " + (i + 1) + "? ");
+            char icon;
+            while (true) {
+                icon = CaseCatcher.typeErrorChar("\nWhat is the icon of player " + (i + 1) + "? ");
+                if (existingIcons.toString().indexOf(icon) == -1) {
+                    existingIcons.append(icon);
+                    break;
+                } else {
+                    System.out.println("\nThat icon is already taken");
+                }
+            }
             if (!name.isEmpty()) {
                 players.add(new player(icon, name));
             } else {

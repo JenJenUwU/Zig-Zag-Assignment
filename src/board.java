@@ -39,6 +39,10 @@ public class board {
         return coordinates;
     }
 
+    public ArrayList<player> getPlayers() {
+        return players;
+    }
+
     @Override
     public String toString() {
         StringBuilder returnString = new StringBuilder();

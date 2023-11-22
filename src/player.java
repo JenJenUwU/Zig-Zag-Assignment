@@ -52,7 +52,9 @@ public class player {
         this.col = col;
     }
 
-    public static int getNumPlayers() {
-        return numPlayers;
+    public void move(int[] coords) {
+        this.row = coords[0];
+        this.col = coords[1];
     }
+
 }
