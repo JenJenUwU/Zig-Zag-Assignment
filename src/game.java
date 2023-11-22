@@ -4,7 +4,8 @@ public class game {
     public static void main(String[] args) {
         board board = init();
         System.out.println(board);
-        System.out.println(board.getCoordinates(33)[0]);
+        System.out.println(board.getCoordinates(8)[0]);
+        System.out.println(board.getCoordinates(8)[1]);
     }
 
     private static board init() {

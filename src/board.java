@@ -30,8 +30,8 @@ public class board {
     public int[] getCoordinates(int space) {
         int[] coordinates = new int[2];
         if (space <= boardWidth * boardHeight) {
-            coordinates[1] = (space - 1) % boardWidth;//y
-            coordinates[0] = (space - 1) / boardWidth;//x
+            coordinates[0] = (space - 1) / boardWidth;    //y
+            coordinates[1] = (space - 1) % boardWidth;//x
         } else {
             coordinates[0] = -1;
             coordinates[1] = -1;
