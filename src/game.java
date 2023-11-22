@@ -9,14 +9,13 @@ public class game {
             System.out.println(board);
             for (player player : board.getPlayers()) {
                 System.out.println();
-                System.out.println(player.getName() + " is rolling the die");
-                CaseCatcher.typeErrorString("\nEnter to roll the die");
-                die.rollDie();
-                System.out.println(player.getName() + " rolled a " + die.getIntValue());
-
+                player.moveTo(board.addMoves(board.getIndex(player.getCoords()), 12));
+                System.out.println(player.getRow());
+                System.out.println(player.getCol());
             }
+            break;
         }
-
+        System.out.println(board);
     }
 
     private static board init() {

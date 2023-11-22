@@ -39,22 +39,31 @@ public class board {
         return coordinates;
     }
 
+    public int getIndex(int[] coords) {
+        return coords[0] * boardWidth + coords[1] + 1;
+    }
+
+    public int[] addMoves(int oldCoords, int moves) {
+        return getCoordinates(oldCoords + moves);
+    }
+
     public ArrayList<player> getPlayers() {
         return players;
     }
 
     @Override
     public String toString() {
-        StringBuilder returnString = new StringBuilder();
-        for (int col = 0; col < boardHeight; col++) {
-            for (int row = 0; row < boardWidth; row++) {
+        StringBuilder returnString = new StringBuilder("\n");
+        for (int row = 0; row < boardHeight; row++) {
+            for (int col = 0; col < boardWidth; col++) {
                 StringBuilder temp;
                 boolean spaceHasPlayer = false;
-                if (col % 2 == 0) {
-                    temp = new StringBuilder(board[col][row]);
+                if (row % 2 == 0) {
+                    temp = new StringBuilder(board[row][col]);
                 } else {
-                    temp = new StringBuilder(board[col][boardWidth - row - 1]);
+                    temp = new StringBuilder(board[row][boardWidth - col - 1]);
                 }
+                temp = new StringBuilder(board[row][col]);
                 for (player player : players) {
                     if (player.getRow() == row && player.getCol() == col && !spaceHasPlayer) {
                         temp = new StringBuilder(String.valueOf(player.getIcon()));
@@ -64,7 +73,7 @@ public class board {
                     }
                 }
                 temp = new StringBuilder(formatSpace(temp.toString(), players.size()));
-                if (row != board[col].length - 1) {
+                if (col != board[row].length - 1) {
                     returnString.append(temp).append(" ");
                 } else {
                     returnString.append(temp).append("\n");

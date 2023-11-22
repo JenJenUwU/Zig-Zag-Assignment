@@ -25,10 +25,12 @@ public class die {
 
     public static void main(String[] args) {
         //expected result should be approaching 3.5 e(x) = Σ x * p(x) = 3.5
-        int sum = 0;
+        double sum = 0;
         double testCase = 10000;
+        die die = new die();
         for (int i = 0; i < testCase; i++) {
-            sum += rollDie(true);
+            die.rollDie(true);
+            sum += die.getDoubleValue();
         }
         System.out.println(sum / testCase);
     }

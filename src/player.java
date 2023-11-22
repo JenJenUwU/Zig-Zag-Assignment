@@ -39,6 +39,10 @@ public class player {
         return col;
     }
 
+    public int[] getCoords() {
+        return new int[]{row, col};
+    }
+
     public void setRow(int row) {
         this.row = row;
     }
@@ -52,7 +56,7 @@ public class player {
         this.col = col;
     }
 
-    public void move(int[] coords) {
+    public void moveTo(int[] coords) {
         this.row = coords[0];
         this.col = coords[1];
     }
