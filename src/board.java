@@ -27,6 +27,14 @@ public class board {
         return item;
     }
 
+    public int getBoardHeight() {
+        return boardHeight;
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
     public int[] getCoordinates(int space) {
         int[] coordinates = new int[2];
         if (space <= boardWidth * boardHeight) {
@@ -60,16 +68,27 @@ public class board {
                 boolean spaceHasPlayer = false;
                 if (row % 2 == 0) {
                     temp = new StringBuilder(board[row][col]);
+                    for (player player : players) {
+                        if (player.getRow() == row && player.getCol() == col) {
+                            if (!spaceHasPlayer) {
+                                temp = new StringBuilder(String.valueOf(player.getIcon()));
+                                spaceHasPlayer = true;
+                            } else {
+                                temp.append(player.getIcon());
+                            }
+                        }
+                    }
                 } else {
                     temp = new StringBuilder(board[row][boardWidth - col - 1]);
-                }
-                temp = new StringBuilder(board[row][col]);
-                for (player player : players) {
-                    if (player.getRow() == row && player.getCol() == col && !spaceHasPlayer) {
-                        temp = new StringBuilder(String.valueOf(player.getIcon()));
-                        spaceHasPlayer = true;
-                    } else if (spaceHasPlayer) {
-                        temp.append(player.getIcon());
+                    for (player player : players) {
+                        if (player.getRow() == row && player.getCol() == boardWidth - col - 1) {
+                            if (!spaceHasPlayer) {
+                                temp = new StringBuilder(String.valueOf(player.getIcon()));
+                                spaceHasPlayer = true;
+                            } else {
+                                temp.append(player.getIcon());
+                            }
+                        }
                     }
                 }
                 temp = new StringBuilder(formatSpace(temp.toString(), players.size()));
