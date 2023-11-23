@@ -5,17 +5,21 @@ public class game {
         board board = init();
         die die = new die();
         boolean game = true;
-        while (game) {
-            System.out.println(board);
-            for (player player : board.getPlayers()) {
-                System.out.println();
-                player.moveTo(board.addMoves(board.getIndex(player.getCoords()), 12));
-                System.out.println(player.getRow());
-                System.out.println(player.getCol());
-            }
-            break;
-        }
         System.out.println(board);
+        while (game) {
+            for (player player : board.getPlayers()) {
+                CaseCatcher.typeErrorString("\n" + player.getName() + "'s turn\nType anything to roll the die: ");
+                die.rollDie();
+                player.moveTo(board.addMoves(board.getIndex(player.getCoords()), die.getIntValue()));
+                System.out.println(board);
+                System.out.println("You rolled a " + die.getIntValue());
+                if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight()) {
+                    System.out.println(player.getName() + " won!");
+                    game = false;
+                    break;
+                }
+            }
+        }
     }
 
     private static board init() {
@@ -44,6 +48,7 @@ public class game {
             }
         }
         board gameBoard = new board(5, 5, players);
+        System.out.println();
         for (int i = 0; i < numPlayers; i++) {
             System.out.println(players.get(i).getName() + " is playing as " + players.get(i).getIcon());
         }
