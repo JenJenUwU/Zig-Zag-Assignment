@@ -10,9 +10,24 @@ public class game {
             for (player player : board.getPlayers()) {
                 CaseCatcher.typeErrorString("\n" + player.getName() + "'s turn\nType anything to roll the die: ");
                 die.rollDie();
-                player.moveTo(board.addMoves(board.getIndex(player.getCoords()), die.getIntValue()));
+
+                int[] coords = board.addMoves(board.getIndex(player.getCoords()), die.getIntValue());
+                player.moveTo(coords);
+                int newIndex = board.getIndex(player.getCoords());
+                boolean isZig = false;
+
+                for (int i = 0; i < board.getZig().length; i++) {
+                    if (newIndex == board.getZig()[i]) {
+                        player.moveTo(board.getCoordinates(board.getZig()[i + 1]));
+                        isZig = true;
+                        break;
+                    }
+                }
                 System.out.println(board);
                 System.out.println("You rolled a " + die.getIntValue());
+                if (isZig) {
+                    System.out.println("You landed on a zig space and moved to square" + board.getIndex(player.getCoords()));
+                }
                 if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight()) {
                     System.out.println(player.getName() + " won!");
                     game = false;
@@ -24,7 +39,7 @@ public class game {
 
     private static board init() {
         ArrayList<player> players = new ArrayList<>();
-        StringBuilder existingIcons = new StringBuilder();
+        StringBuilder existingIcons = new StringBuilder("Zz");
         int numPlayers = CaseCatcher.typeErrorInt("\nHow many players are playing the game? ", "\nThe player has to be an integer");
         while (numPlayers < 2) {
             numPlayers = CaseCatcher.typeErrorInt("\nYou can not have less than 2 players\nHow many players are playing the game? ", "\nThe player hsa to be an integer");
