@@ -43,22 +43,33 @@ public class player {
         return new int[]{row, col};
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
-    public void setCoords(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-
     public void moveTo(int[] coords) {
         this.row = coords[0];
         this.col = coords[1];
+    }
+
+    /**
+     * Test method
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        player player = new player('a', "test");
+        System.out.println(player.getIcon());
+        System.out.println(player.getName());
+        System.out.println();
+        System.out.println(player.getRow());
+        System.out.println(player.getCol());
+        System.out.println();
+        System.out.println(player.getCoords()[0]);
+        System.out.println(player.getCoords()[1]);
+        player.moveTo(new int[]{1, 1});
+        System.out.println();
+        System.out.println(player.getRow());
+        System.out.println(player.getCol());
+        System.out.println();
+        System.out.println(player.getCoords()[0]);
+        System.out.println(player.getCoords()[1]);
     }
 
 }
