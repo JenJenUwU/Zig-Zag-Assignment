@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class game {
     public static void main(String[] args) {
@@ -15,6 +16,7 @@ public class game {
                 player.moveTo(coords);
                 int newIndex = board.getIndex(player.getCoords());
                 boolean isZig = false;
+                boolean isZag = false;
 
                 for (int i = 0; i < board.getZig().length; i++) {
                     if (newIndex == board.getZig()[i]) {
@@ -23,12 +25,38 @@ public class game {
                         break;
                     }
                 }
+                if (!isZig) {
+                    for (int i = 0; i < board.getZag().length; i++) {
+                        if (newIndex == board.getZag()[i]) {
+                            isZag = true;
+                            break;
+                        }
+                    }
+                }
                 System.out.println(board);
                 System.out.println("You rolled a " + die.getIntValue());
                 if (isZig) {
-                    System.out.println("You landed on a zig space and moved to square" + board.getIndex(player.getCoords()));
+                    System.out.println("You landed on a zig space and moved to square " + board.getIndex(player.getCoords()));
+                } else if (isZag) {
+                    boolean run = true;
+                    while (run) {
+                        char icon = CaseCatcher.typeErrorChar("You landed on a zag space. Which player do you want to swap with? ");
+                        for (player playerSwapped : board.getPlayers()) {
+                            if (playerSwapped.getIcon() == icon && playerSwapped != player) {
+                                player.swap(playerSwapped);
+                                run = false;
+                                break;
+                            }
+                        }
+                        if (run) {
+                            System.out.println("Can't find the player, Please enter again");
+                        }
+                    }
+                    System.out.println(board);
+                    System.out.println("Successfully swapped!");
                 }
-                if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight()) {
+                System.out.println("You are now at" + Arrays.toString(player.getCoords()));
+                if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight() || board.getIndex(player.getCoords()) == -1) {
                     System.out.println(player.getName() + " won!");
                     game = false;
                     break;
@@ -62,7 +90,7 @@ public class game {
                 players.add(new player(icon));
             }
         }
-        board gameBoard = new board(5, 5, players);
+        board gameBoard = new board(3, 3, players);
         System.out.println();
         for (int i = 0; i < numPlayers; i++) {
             System.out.println(players.get(i).getName() + " is playing as " + players.get(i).getIcon());
