@@ -48,6 +48,12 @@ public class player {
         this.col = coords[1];
     }
 
+    public void swap(player player) {
+        int[] temp = player.getCoords();
+        player.moveTo(this.getCoords());
+        this.moveTo(temp);
+    }
+
     /**
      * Test method
      *
