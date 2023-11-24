@@ -8,6 +8,7 @@ public class board {
     private ArrayList<player> players;
     private int[] zig;
     private int[] zag;
+    private ArrayList<Integer> occupiedSpaces = new ArrayList<>();
 
     public board(int width, int height, ArrayList<player> players) {
         boardWidth = width;
@@ -20,6 +21,7 @@ public class board {
             }
         }
         setZig();
+        setZag();
     }
 
     public board(int width, int height) {
@@ -33,12 +35,47 @@ public class board {
             }
         }
         setZig();
+        setZag();
     }
 
     private void setZig() {
         zig = new int[(int) Math.sqrt(boardWidth * boardHeight)];
+        for (int i = 0; i < zig.length; i++) {
+            boolean isDuplicate = false;
+            int temp = (int) (Math.random() * (boardWidth * boardHeight - 2 + 1) + 2);
+            for (int j : occupiedSpaces) {
+                if (j == temp) {
+                    isDuplicate = true;
+                    i--;
+                    break;
+                }
+            }
+            if (!isDuplicate) {
+                occupiedSpaces.add(temp);
+                zig[i] = temp;
+            }
+        }
         Arrays.sort(zig);
-        System.out.println(Arrays.toString(zig));
+    }
+
+    private void setZag() {
+        zag = new int[(int) Math.cbrt(boardWidth * boardHeight)];
+        for (int i = 0; i < zag.length; i++) {
+            boolean isDuplicate = false;
+            int temp = (int) (Math.random() * (boardWidth * boardHeight - 2 + 1) + 2);
+            for (int j : occupiedSpaces) {
+                if (j == temp) {
+                    isDuplicate = true;
+                    i--;
+                    break;
+                }
+            }
+            if (!isDuplicate) {
+                occupiedSpaces.add(temp);
+                zag[i] = temp;
+            }
+        }
+        Arrays.sort(zag);
     }
 
     private String formatSpace(String item, int num) {
@@ -79,11 +116,18 @@ public class board {
     }
 
     public int getIndex(int[] coords) {
+        if (coords[0] == -1 && coords[1] == -1) {
+            return -1;
+        }
         return coords[0] * boardWidth + coords[1] + 1;
     }
 
     public int[] getZig() {
         return zig;
+    }
+
+    public int[] getZag() {
+        return zag;
     }
 
     public int[] addMoves(int oldCoords, int moves) {
@@ -98,11 +142,11 @@ public class board {
     public String toString() {
         StringBuilder returnString = new StringBuilder("\n");
         for (int i = 0; i < (2 + maxSpaceLength() * boardWidth + boardWidth - 1); i++) {
-            returnString.append("☐");
+            returnString.append("#");
         }
         for (int row = 0; row < boardHeight; row++) {
             returnString.append("\n");
-            returnString.append("☐");
+            returnString.append("#");
             for (int col = 0; col < boardWidth; col++) {
                 StringBuilder temp;
                 boolean spaceHasPlayer = false;
@@ -111,6 +155,13 @@ public class board {
                     for (int j : zig) {
                         if (j == getIndex(new int[]{row, col})) {
                             temp = new StringBuilder("Z");
+                            spaceHasPlayer = true;
+                            break;
+                        }
+                    }
+                    for (int j : zag) {
+                        if (j == getIndex(new int[]{row, col})) {
+                            temp = new StringBuilder("z");
                             spaceHasPlayer = true;
                             break;
                         }
@@ -134,6 +185,13 @@ public class board {
                             break;
                         }
                     }
+                    for (int j : zag) {
+                        if (j == getIndex(new int[]{row, boardWidth - col - 1})) {
+                            temp = new StringBuilder("z");
+                            spaceHasPlayer = true;
+                            break;
+                        }
+                    }
                     for (player player : players) {
                         if (player.getRow() == row && player.getCol() == boardWidth - col - 1) {
                             if (!spaceHasPlayer) {
@@ -149,7 +207,7 @@ public class board {
                 if (col != board[row].length - 1) {
                     returnString.append(temp).append(" ");
                 } else {
-                    returnString.append(temp).append("☐\n");
+                    returnString.append(temp).append("#\n");
                 }
             }
             if (row % 2 != 0) {
@@ -157,7 +215,7 @@ public class board {
                     if (i == 1 || i == 2) {
                         returnString.append(" ");
                     } else {
-                        returnString.append("☐");
+                        returnString.append("#");
                     }
                 }
             } else {
@@ -165,7 +223,7 @@ public class board {
                     if (i == (2 + maxSpaceLength() * boardWidth + boardWidth - 1) - 2 || i == (2 + maxSpaceLength() * boardWidth + boardWidth - 1) - 3) {
                         returnString.append(" ");
                     } else {
-                        returnString.append("☐");
+                        returnString.append("#");
                     }
                 }
             }
@@ -173,7 +231,7 @@ public class board {
         returnString.delete(returnString.length() - 1 - (2 + maxSpaceLength() * boardWidth + boardWidth - 1), returnString.length());
         returnString.append("\n");
         for (int i = 0; i < (2 + maxSpaceLength() * boardWidth + boardWidth - 1); i++) {
-            returnString.append("☐");
+            returnString.append("#");
         }
         return returnString.toString();
     }
