@@ -238,6 +238,19 @@ public class board {
 
     public static void main(String[] args) {
         board board = new board(5, 5);
+        System.out.println("Board height: " + board.getBoardHeight());
+        System.out.println("Board width: " + board.getBoardWidth());
         System.out.println(board);
+        System.out.println("Coords of zags" + Arrays.toString(board.getZag()));
+        System.out.println("Coords of zigs" + Arrays.toString(board.getZig()));
+        System.out.println();
+        System.out.println("Translate 1 to coords: " + Arrays.toString(board.getCoordinates(1)));
+        System.out.println("Translate [0][0] to index: " + board.getIndex(new int[]{0, 0}));
+        System.out.println("Calculate the new coords from index 1 + 1: " + Arrays.toString(board.addMoves(board.getIndex(new int[]{0, 0}), 1)));
+        board board2 = new board(10, 7);
+        System.out.println(board2);
+        for (int i = 1; i <= board2.getBoardHeight() * board2.boardWidth; i++) {
+            System.out.println("Translate " + i + " to coords: " + Arrays.toString(board2.getCoordinates(i)));
+        }
     }
 }
