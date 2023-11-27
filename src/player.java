@@ -54,11 +54,6 @@ public class player {
         this.moveTo(temp);
     }
 
-    /**
-     * Test method
-     *
-     * @param args
-     */
     public static void main(String[] args) {
         player player = new player('a', "test");
         System.out.println(player.getIcon());
