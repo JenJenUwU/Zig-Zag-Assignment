@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class game {
     public static void main(String[] args) {
@@ -36,7 +35,7 @@ public class game {
                 System.out.println(board);
                 System.out.println("You rolled a " + die.getIntValue());
                 if (isZig) {
-                    System.out.println("You landed on a zig space and moved to square " + board.getIndex(player.getCoords()));
+                    System.out.println("You landed on a zig space, jumping to the next zig");
                 } else if (isZag) {
                     boolean run = true;
                     while (run) {
@@ -55,11 +54,12 @@ public class game {
                     System.out.println(board);
                     System.out.println("Successfully swapped!");
                 }
-                System.out.println("You are now at" + Arrays.toString(player.getCoords()));
                 if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight() || board.getIndex(player.getCoords()) == -1) {
                     System.out.println(player.getName() + " won!");
                     game = false;
                     break;
+                } else {
+                    System.out.println("You landed on square " + board.getIndex(player.getCoords()));
                 }
             }
         }
