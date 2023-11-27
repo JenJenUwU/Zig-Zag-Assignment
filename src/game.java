@@ -64,7 +64,7 @@ public class game {
         }
     }
 
-    private static board init() {
+    public static board init() {
         ArrayList<player> players = new ArrayList<>();
         StringBuilder existingIcons = new StringBuilder("Zz");
         int numPlayers = CaseCatcher.typeErrorInt("\nHow many players are playing the game? ", "\nThe player has to be an integer");
