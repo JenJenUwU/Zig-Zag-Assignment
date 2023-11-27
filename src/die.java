@@ -20,7 +20,9 @@ public class die {
     }
 
     public void rollDie(boolean isDouble) {
-        doubleValue = Math.random() * 6 + 1;
+        if (isDouble) {
+            doubleValue = Math.random() * 6 + 1;
+        }
     }
 
     public static void main(String[] args) {
