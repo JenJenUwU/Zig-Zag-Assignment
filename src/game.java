@@ -10,14 +10,13 @@ public class game {
             for (player player : board.getPlayers()) {
                 CaseCatcher.typeErrorString("\n" + player.getName() + "'s turn\nType anything to roll the die: ");
                 die.rollDie();
-
                 int[] coords = board.addMoves(board.getIndex(player.getCoords()), die.getIntValue());
                 player.moveTo(coords);
                 int newIndex = board.getIndex(player.getCoords());
                 boolean isZig = false;
                 boolean isZag = false;
 
-                for (int i = 0; i < board.getZig().length; i++) {
+                for (int i = 0; i < board.getZig().length - 1; i++) {
                     if (newIndex == board.getZig()[i]) {
                         player.moveTo(board.getCoordinates(board.getZig()[i + 1]));
                         isZig = true;
@@ -90,7 +89,7 @@ public class game {
                 players.add(new player(icon));
             }
         }
-        board gameBoard = new board(3, 3, players);
+        board gameBoard = new board(CaseCatcher.typeErrorInt("\nWhat is the width of your board?", "\nValue has to be an integer"), CaseCatcher.typeErrorInt("\nWhat is the height of your board?", "\nValue has to be an integer"), players);
         System.out.println();
         for (int i = 0; i < numPlayers; i++) {
             System.out.println(players.get(i).getName() + " is playing as " + players.get(i).getIcon());
