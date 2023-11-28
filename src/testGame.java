@@ -6,13 +6,11 @@ public class testGame {
             for (player player : board.getPlayers()) {
 
                 CaseCatcher.typeErrorString("\n" + player.getName() + "'s turn\nType anything to roll the die: ");
-                /*die die = new die();
+                die die = new die();
                 die.rollDie();
-                 */
-                int[] coords = board.addMoves(board.getIndex(player.getCoords()), 1);
+                int[] coords = board.addMoves(board.getIndex(player.getCoords()), die.getIntValue());
                 player.moveTo(coords);
                 int newIndex = board.getIndex(player.getCoords());
-                /*
                 boolean isZig = false;
                 boolean isZag = false;
 
@@ -30,10 +28,10 @@ public class testGame {
                             break;
                         }
                     }
-                }*/
+                }
                 System.out.println(board);
-                //System.out.println("You rolled a " + die.getIntValue());
-                /*if (isZig) {
+                System.out.println("You rolled a " + die.getIntValue());
+                if (isZig) {
                     System.out.println("You landed on a zig space, jumping to the next zig");
                 } else if (isZag) {
                     boolean run = true;
@@ -53,7 +51,6 @@ public class testGame {
                     System.out.println(board);
                     System.out.println("Successfully swapped!");
                 }
-                 */
                 if (board.getIndex(player.getCoords()) == board.getBoardWidth() * board.getBoardHeight() || board.getIndex(player.getCoords()) == -1) {
                     System.out.println(player.getName() + " won!");
                     return;
